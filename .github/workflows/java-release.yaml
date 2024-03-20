@@ -34,7 +34,9 @@ jobs:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.NIMBOX_PUBLISH_TOKEN }}
       - name: Print Token Length
-        run: echo "Token length: ${#GITHUB_TOKEN}"
+        run: |
+          TOKEN_LENGTH=${#GITHUB_TOKEN}
+          echo "Token length: $TOKEN_LENGTH"
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.NIMBOX_PUBLISH_TOKEN }}
