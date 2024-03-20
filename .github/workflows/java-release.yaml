@@ -22,6 +22,22 @@ jobs:
         run: cat gradle.properties
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
+      - name: Check Token Presence
+        run: |
+          echo "$GITHUB_ACTOR"
+          if [ -z "$GITHUB_TOKEN" ]; then
+            echo "Token is missing!"
+          else
+            echo "Token is set."
+          fi
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.NIMBOX_PUBLISH_TOKEN }}
+      - name: Print Token Length
+        run: echo "Token length: ${#GITHUB_TOKEN}"
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.NIMBOX_PUBLISH_TOKEN }}
       - name: Build with Gradle
         run: ./gradlew build
         env:
