@@ -29,6 +29,7 @@ jobs:
         with:
           node-version: ${{ inputs.nodeVersion }}
           cache: 'npm'
+          cache-dependency-path: 'application/package-lock.json'
       - name: Build with Gradle
         run: ./gradlew build
         env:
