@@ -33,7 +33,7 @@ jobs:
       - name: Authenticate with private NPM package
         run: |
           echo "@nimbox:registry=https://npm.pkg.github.com" > ~/.npmrc
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NIMBOX_PUBLISH_TOKEN }}" >> ~/.npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.NIMBOX_PUBLISH_TOKEN }}" >> ~/.npmrc
       - name: Build with Gradle
         run: ./gradlew build
         env:
