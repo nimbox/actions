@@ -1,4 +1,4 @@
-name: Create Release Workflow
+name: Create Java Release Workflow
 
 on:
   workflow_call:
@@ -27,7 +27,7 @@ jobs:
       - name: Setup Docker (Optional)
         if: ${{ inputs.dockerSupport }}
         uses: docker/setup-buildx-action@v3
-      - name: Build with Gradle
+      - name: Build Gradle
         run: ./gradlew build
         env:
           GITHUB_ACTOR: ${{ github.actor }}

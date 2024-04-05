@@ -1,0 +1,40 @@
+name: Create Node Release Workflow
+
+on:
+  workflow_call:
+    inputs:
+      nodeVersion:
+        required: false
+        type: string
+        default: '20'
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.nodeVersion }}
+          registry-url: 'https://npm.pkg.github.com/'
+          scope: '@nimbox'
+      - name: Build package
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NIMBOX_PUBLISH_TOKEN }}
+        run: |
+          npm ci
+          npm run build
+      - name: Publish to GitHub Packages
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NIMBOX_PUBLISH_TOKEN }}
+        run: npm publish
+      - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref_name }}
+        run: |
+          gh release create "$tag" \
+              --repo="$GITHUB_REPOSITORY" \
+              --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
+              --generate-notes
