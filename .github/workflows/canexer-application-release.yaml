@@ -10,7 +10,7 @@ on:
       nodeVersion:
         required: false
         type: string
-        default: '16'
+        default: '20'
 
 jobs:
   build-and-publish:
