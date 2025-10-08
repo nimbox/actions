@@ -6,7 +6,7 @@ on:
       javaVersion:
         required: false
         type: string
-        default: '17'
+        default: '21'
       dockerSupport:
         required: false
         type: boolean
