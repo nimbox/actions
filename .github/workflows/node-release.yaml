@@ -3,6 +3,10 @@ name: Create Node Release Workflow
 on:
   workflow_call:
     inputs:
+      workingDirectory:
+        required: false
+        type: string
+        default: '.'
       nodeVersion:
         required: false
         type: string
@@ -11,6 +15,9 @@ on:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.workingDirectory }}
     steps:
       - uses: actions/checkout@v4
       - name: Set up node
