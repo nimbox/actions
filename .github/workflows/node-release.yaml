@@ -40,13 +40,8 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NIMBOX_PUBLISH_TOKEN }}
         run: npm publish
-      - name: Create release
-        if: ${{ inputs.generateRelease }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.ref_name }}
-        run: |
-          gh release create "$tag" \
-              --repo="$GITHUB_REPOSITORY" \
-              --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
-              --generate-notes
+  create-release:
+    needs: build-and-publish
+    if: ${{ inputs.generateRelease }}
+    uses: nimbox/actions/.github/workflows/create-release.yaml@main
+    secrets: inherit
