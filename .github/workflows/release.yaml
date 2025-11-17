@@ -7,11 +7,11 @@ on:
 
 jobs:
   publish-java-versioning:
-    uses: nimbox/build-tools/.github/workflows/java-release.yaml
+    uses: nimbox/build-tools/.github/workflows/java-release.yaml@main
     with:
       generateRelease: false
     secrets: inherit
   generate-release:
     needs: [publish-java-versioning]
-    uses: nimbox/build-tools/.github/workflows/create-release.yaml
+    uses: nimbox/actions/.github/workflows/create-release.yaml@main
     secrets: inherit
