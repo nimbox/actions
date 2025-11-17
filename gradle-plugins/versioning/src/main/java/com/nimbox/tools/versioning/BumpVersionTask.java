@@ -109,19 +109,17 @@ public abstract class BumpVersionTask extends DefaultTask {
 
 		// git tag
 
-		System.out.println("tag: " + List.of("git", "tag", tag));
-		// execOperations.exec((ExecSpec spec) -> {
-		// spec.setWorkingDir(getProject().getRootDir());
-		// spec.commandLine("git", "tag", tag);
-		// });
+		execOperations.exec((ExecSpec spec) -> {
+			spec.setWorkingDir(getProject().getRootDir());
+			spec.commandLine("git", "tag", tag);
+		});
 
 		// git push origin tag
 
-		System.out.println("push: " + List.of("git", "push", remote, tag));
-		// execOperations.exec((ExecSpec spec) -> {
-		// spec.setWorkingDir(getProject().getRootDir());
-		// spec.commandLine("git", "push", remote, tag);
-		// });
+		execOperations.exec((ExecSpec spec) -> {
+			spec.setWorkingDir(getProject().getRootDir());
+			spec.commandLine("git", "push", remote, tag);
+		});
 
 		getLogger().lifecycle("Created and pushed tag {}", tag);
 
