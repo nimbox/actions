@@ -51,5 +51,5 @@ jobs:
   create-release:
     needs: build-and-publish
     if: ${{ inputs.generateRelease }}
-    uses: nimbox/actions/.github/workflows/create-release.yaml@main
+    uses: nimbox/build-tools/.github/workflows/create-release.yaml@main
     secrets: inherit
