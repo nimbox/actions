@@ -11,6 +11,10 @@ on:
         required: false
         type: string
         default: '20'
+      generateRelease:
+        required: false
+        type: boolean
+        default: true
 
 jobs:
   build-and-publish:
@@ -37,6 +41,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NIMBOX_PUBLISH_TOKEN }}
         run: npm publish
       - name: Create release
+        if: ${{ inputs.generateRelease }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref_name }}
