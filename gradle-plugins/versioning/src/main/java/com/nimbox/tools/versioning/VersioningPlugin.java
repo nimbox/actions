@@ -15,7 +15,7 @@ public abstract class VersioningPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 
 		var versionProvider = VersionProvider.create(getProviders(), project.getRootDir());
-		String version = versionProvider.get();
+		var version = versionProvider.get();
 		project.setVersion(version);
 
 		// Task printVersion
