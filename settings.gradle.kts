@@ -1,0 +1,19 @@
+rootProject.name = "build-tools"
+
+pluginManagement {
+	repositories {
+		mavenCentral()
+		gradlePluginPortal()
+	}
+	includeBuild("gradle-plugins/versioning")
+}
+
+dependencyResolutionManagement {
+	repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+	repositories {
+		mavenCentral()
+		gradlePluginPortal()
+	}
+}
+
+include("gradle-plugins:versioning")
