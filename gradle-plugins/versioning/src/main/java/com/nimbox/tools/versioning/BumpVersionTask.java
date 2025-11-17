@@ -1,11 +1,11 @@
 package com.nimbox.tools.versioning;
 
 import java.io.ByteArrayOutputStream;
-import java.util.List;
 
 import javax.inject.Inject;
 
 import org.gradle.api.DefaultTask;
+import org.gradle.api.provider.ProviderFactory;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.process.ExecOperations;
@@ -16,6 +16,9 @@ public abstract class BumpVersionTask extends DefaultTask {
 	// Services
 
 	private final ExecOperations execOperations;
+
+	@Inject
+	protected abstract ProviderFactory getProviders();
 
 	// Properties
 
@@ -66,7 +69,8 @@ public abstract class BumpVersionTask extends DefaultTask {
 
 		check();
 
-		String currentVersion = getProject().getVersion().toString();
+		var versionProvider = VersionProvider.create(getProviders(), getProject().getRootDir());
+		String currentVersion = versionProvider.get();
 		String base = currentVersion.split("-", 2)[0];
 
 		String[] parts = base.split("\\.");

@@ -4,7 +4,6 @@ import javax.inject.Inject;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
-import org.gradle.api.provider.Provider;
 import org.gradle.api.provider.ProviderFactory;
 
 public abstract class VersioningPlugin implements Plugin<Project> {
@@ -15,45 +14,9 @@ public abstract class VersioningPlugin implements Plugin<Project> {
 	@Override
 	public void apply(Project project) {
 
-		Provider<String> gitVersionProvider = getProviders()
-				.exec(spec -> {
-					spec.setWorkingDir(project.getRootDir());
-					spec.commandLine(
-							"git",
-							"describe",
-							"--tags",
-							"--match", "v*",
-							"--always",
-							"--dirty",
-							"--first-parent");
-				})
-				.getStandardOutput()
-				.getAsText()
-				.map(raw -> {
-
-					String trimmed = raw.trim();
-					if (trimmed.startsWith("v")) {
-						trimmed = trimmed.substring(1);
-					}
-
-					if (trimmed.isEmpty()) {
-						return "0.0.0";
-					}
-
-					var parts = trimmed.split("-", 2);
-
-					if (isVersion(parts[0])) {
-						return trimmed;
-					} else {
-						return "0.0.0-" + trimmed;
-					}
-
-				});
-
-		// You probably *do* want this eagerly to set project.version:
-
-		String gitVersion = gitVersionProvider.get();
-		project.setVersion(gitVersion);
+		var versionProvider = VersionProvider.create(getProviders(), project.getRootDir());
+		String version = versionProvider.get();
+		project.setVersion(version);
 
 		// Task printVersion
 
@@ -80,10 +43,6 @@ public abstract class VersioningPlugin implements Plugin<Project> {
 				BumpType.MAJOR,
 				"Create and push a major version tag from the current version");
 
-	}
-
-	private boolean isVersion(String version) {
-		return version.matches("^\\d+\\.\\d+\\.\\d+$");
 	}
 
 	private void registerBumpTask(Project project, String name, BumpType type, String description) {
