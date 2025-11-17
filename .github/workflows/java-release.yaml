@@ -15,6 +15,10 @@ on:
         required: false
         type: boolean
         default: false
+      generateRelease:
+        required: false
+        type: boolean
+        default: true
 
 jobs:
   build-and-publish:
@@ -45,6 +49,7 @@ jobs:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.NIMBOX_PUBLISH_TOKEN }}
       - name: Create release
+        if: ${{ inputs.generateRelease }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref_name }}
