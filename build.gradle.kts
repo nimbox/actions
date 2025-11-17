@@ -1,8 +1,8 @@
 plugins {
-	id("com.nimbox.build.versioning")
+	id("com.nimbox.tools.versioning")
 }
 
-group = "com.nimbox.build"
+group = "com.nimbox.tools"
 
 subprojects {
 	group = rootProject.group

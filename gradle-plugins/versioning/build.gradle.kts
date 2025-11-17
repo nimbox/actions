@@ -5,8 +5,8 @@ plugins {
 gradlePlugin {
 	plugins {
 		create("versioning") {
-			id = "com.nimbox.build.versioning"
-			implementationClass = "com.nimbox.build.versioning.VersioningPlugin"
+			id = "com.nimbox.tools.versioning"
+			implementationClass = "com.nimbox.tools.versioning.VersioningPlugin"
 		}
 	}
 }
