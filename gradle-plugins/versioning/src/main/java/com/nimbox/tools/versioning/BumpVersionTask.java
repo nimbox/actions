@@ -115,7 +115,7 @@ public abstract class BumpVersionTask extends DefaultTask {
 
 		execOperations.exec((ExecSpec spec) -> {
 			spec.setWorkingDir(getProject().getRootDir());
-			spec.commandLine("git", "tag", tag);
+			spec.commandLine("git", "tag", "-a", tag, "-m", "Release " + nextVersion);
 		});
 
 		// git push origin tag
