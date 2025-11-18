@@ -69,8 +69,7 @@ public abstract class BumpVersionTask extends DefaultTask {
 
 		check();
 
-		var versionProvider = VersionProvider.create(getProviders(), getProject().getRootDir());
-		var currentVersion = versionProvider.get();
+		var currentVersion = getProject().getVersion().toString();
 		var base = currentVersion.split("-", 2)[0];
 
 		String[] parts = base.split("\\.");
