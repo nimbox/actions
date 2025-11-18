@@ -3,6 +3,7 @@ plugins {
 }
 
 group = "com.nimbox.tools"
+version = versioning.version.get()
 
 subprojects {
 	group = rootProject.group

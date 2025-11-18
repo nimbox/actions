@@ -14,16 +14,19 @@ public abstract class VersioningPlugin implements Plugin<Project> {
 	@Override
 	public void apply(Project project) {
 
-		var versionProvider = VersionProvider.create(getProviders(), project.getRootDir());
-		var version = versionProvider.get();
-		project.setVersion(version);
+		// Extension versioning
+
+		project.getExtensions()
+				.create("versioning", VersioningExtension.class, getProviders(), project.getRootDir());
 
 		// Task printVersion
 
 		project.getTasks().register("version", task -> {
 			task.setGroup("versioning");
-			task.setDescription("Prints project.version derived from git");
-			task.doLast(t -> System.out.println(project.getVersion()));
+			task.setDescription("Prints the project version");
+			task.doLast(t -> {
+				t.getLogger().lifecycle(project.getVersion().toString());
+			});
 		});
 
 		// Tasks versionPatch, versionMinor, versionMajor
